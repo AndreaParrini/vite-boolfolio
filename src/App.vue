@@ -1,14 +1,25 @@
 <script>
+import SectionHeader from './components/SectionHeader.vue';
+import SectionMain from './components/SectionMain.vue'
+
 export default {
   name: 'App',
-  data() {
-
+  components: {
+    SectionHeader,
+    SectionMain
   }
+
 }
 </script>
 
 <template>
-  <h3>post</h3>
+  <SectionHeader></SectionHeader>
+
+  <SectionMain></SectionMain>
+
+  <footer>
+
+  </footer>
 </template>
 
 <style scoped></style>
