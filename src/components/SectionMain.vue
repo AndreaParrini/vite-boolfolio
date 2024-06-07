@@ -8,10 +8,16 @@ export default {
             base_api_url: 'http://127.0.0.1:8000/',
             projects_endpoint: 'api/projects',
             projects: '',
+            searchText: ''
         };
     },
     components: { ProjectCard },
     methods: {
+        search() {
+            const url = this.base_api_url + this.projects_endpoint + `?search=${this.searchText}`;
+            console.log(url)
+            this.callApi(url);
+        },
         goTo(url) {
             console.log(url);
             this.callApi(url);
@@ -56,8 +62,8 @@ export default {
                     <div class="container">
                         <div class="collapse navbar-collapse d-flex justify-content-between py-3" id="collapsibleNavId">
                             <h4 class="text-uppercase" href="#">All Projects</h4>
-                            <form class="d-flex my-2 my-lg-0">
-                                <input class="form-control me-sm-2" type="text" placeholder="Search" />
+                            <form class="d-flex my-2 my-lg-0" @submit.prevent="search()">
+                                <input class="form-control me-sm-2" type="text" placeholder="Search" v-model="searchText" />
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                                     Search
                                 </button>
@@ -71,7 +77,7 @@ export default {
                     </div>
                 </div>
                 <nav aria-label="Page navigation " class="py-4">
-                    <ul class="pagination">{{ console.log(projects.links) }}
+                    <ul class="pagination">
                         <li v-for="link in     projects.links    " class="page-item"
                             :class="!(link.url) ? 'disabled' : '', link.active ? 'active' : ''">
                             <button class="page-link" :href="link.url" type="button" @click="goTo(link.url)">
@@ -80,7 +86,6 @@ export default {
                         </li>
                     </ul>
                 </nav>
-
             </div>
         </div>
     </main>
