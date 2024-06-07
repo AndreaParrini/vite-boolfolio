@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import ProjectCard from './ProjectCard.vue';
 export default {
     name: 'SectionMain',
     data() {
@@ -7,8 +8,9 @@ export default {
             base_api_url: 'http://127.0.0.1:8000/',
             projects_endpoint: 'api/projects',
             projects: '',
-        }
+        };
     },
+    components: { ProjectCard },
     methods: {
         goTo(url) {
             console.log(url);
@@ -23,7 +25,7 @@ export default {
                 })
                 .catch((error) => {
                     console.error(error);
-                })
+                });
         }
     },
     mounted() {
@@ -65,23 +67,7 @@ export default {
                 </nav>
                 <div class="row row-cols-3 ">
                     <div class="col my-2 " v-for="project in projects.data">
-                        <div class="card h-100">
-                            <img v-if="project.cover_image" height="400"
-                                :src="project.cover_image.startsWith('https://') ? project.cover_image : this.base_api_url + 'storage/' + project.cover_image"
-                                class="card-img-top ratio" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-uppercase">{{ project.title }}</h5>
-                                <div class="card-subtitle mb-2 text-muted " v-if="project.technologies.length > 0">
-                                    <span class="badge bg-primary mx-1" v-for="tec in project.technologies">{{ tec.name
-                                    }}</span>
-
-                                </div>
-                                <div class="card-subtitle mb-2 text-muted " v-else> Non ci sono tecnologie in questo
-                                    progetto</div>
-
-                                <p class="card-text">S{{ project.content }}</p>
-                            </div>
-                        </div>
+                        <ProjectCard :project="project" :base_api_url="this.base_api_url"></ProjectCard>
                     </div>
                 </div>
                 <nav aria-label="Page navigation " class="py-4">
